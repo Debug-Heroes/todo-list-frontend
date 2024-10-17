@@ -1,3 +1,3 @@
-const App = () => <div>TODO List</div>;
+const App = (): JSX.Element => <div>TODO List</div>;
 
 export default App;
