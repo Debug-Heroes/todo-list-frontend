@@ -12,8 +12,12 @@
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,md}'"
   },
   "dependencies": {
+    "localforage": "^1.10.0",
+    "match-sorter": "^8.0.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.27.0",
+    "sort-by": "^1.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
