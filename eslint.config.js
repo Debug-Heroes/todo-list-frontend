@@ -39,5 +39,13 @@ export default tseslint.config(
       ],
       'prettier/prettier': 'error',
     },
+    "overrides": [
+    {
+      "files": ["*.jsx", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off"
+      }
+    }
+  ]
   },
 );

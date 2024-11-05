@@ -1,3 +1,7 @@
-const App = (): JSX.Element => <div>TODO List</div>;
+import { Router } from "./routes/router-provider";
 
-export default App;
+export function App() {
+  return (
+    <Router />
+  )
+}
