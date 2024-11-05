@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  background-color: theme('colors.gray.800');
+  color: theme('colors.gray.200')
+}
+
+
+input, button, textarea {
+  outline: none;
+}
+
+
+input, textarea {
+  padding: 0.2rem;
+}
