@@ -8,6 +8,9 @@ body {
   color: theme('colors.gray.200')
 }
 
+h1 {
+  color: theme('colors.gray.200');
+}
 
 input, button, textarea {
   outline: none;
