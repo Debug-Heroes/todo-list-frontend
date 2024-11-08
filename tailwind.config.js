@@ -6,7 +6,9 @@ export default {
   ],
   theme: {
     extend: {
-     
+     colors: {
+      "dh-gray-300": '#BEC1CC'
+     }
     },
   },
   plugins: [
