@@ -4,6 +4,7 @@
 
 
 body {
+  -webkit-font-smoothing: antialiased;
   background-color: theme('colors.gray.800');
   color: theme('colors.gray.200')
 }
