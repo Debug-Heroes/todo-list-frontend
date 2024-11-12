@@ -14,8 +14,8 @@ import { z } from "zod";
 
 
 const UsersSignInSchema = z.object({
-  email: z.string().email().trim(),
-  password: z.string().min(4).trim(),
+  email: z.string().email({ message: 'Please enter a valid email address' }).trim(),
+  password: z.string().min(1, { message: "Password cannot be empty" }).trim(),
 })
 
 type UsersSignInSchemaForm = z.infer<typeof UsersSignInSchema>
@@ -23,7 +23,9 @@ type UsersSignInSchemaForm = z.infer<typeof UsersSignInSchema>
 export function SignIn() {
 
   const navigate = useNavigate()
-  const { handleSubmit, register, control } = useForm<UsersSignInSchemaForm>({
+  const { handleSubmit, register, control, formState: {
+    errors
+  } } = useForm<UsersSignInSchemaForm>({
     resolver: zodResolver(UsersSignInSchema),
     defaultValues: {
       password: '',
@@ -70,17 +72,22 @@ export function SignIn() {
           <label htmlFor="email">E-mail</label>
           <input {...register('email')} placeholder="Enter your e-mail" className="rounded-sm p-2" id="email" type="email" />
         </div>
+        <p className="text-xs -mt-3 text-red-800 h-2">{errors.email?.message}</p>
+
         <Controller
           control={control}
           name="password"
 
           render={({ field }) => {
             return (
-              <InputPasswordWithIcon
-                title="Password"
-                placeholder="Enter your password"
-                {...field}
-              />
+              <>
+                <InputPasswordWithIcon
+                  title="Password"
+                  placeholder="Enter your password"
+                  {...field}
+                />
+                <p className="text-xs -mt-3 text-red-800 h-2">{errors.password?.message}</p>
+              </>
             )
           }}
 
