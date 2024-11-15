@@ -48,7 +48,7 @@ export function Home() {
             <TitleOfTypeOfProgress
               title="IN PROGRESS"
             />
-            <div className="flex flex-col gap-3 overflow-y-scroll h-[580px] scrollbar">
+            <div className="flex flex-col gap-3 overflow-y-scroll h-[500px] scrollbar">
               <Card />
               <Card />
               <Card />
