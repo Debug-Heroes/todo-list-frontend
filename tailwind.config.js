@@ -6,6 +6,11 @@ export default {
   ],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        'tasks-grid-sm': 'repeat(3, calc(100% - (2rem * 2) - 40px))',
+        'tasks-grid-md': 'repeat(3, calc((100% - (2rem * 2))/3))',
+
+      },
      colors: {
       "dh-gray-300": '#BEC1CC'
      }
