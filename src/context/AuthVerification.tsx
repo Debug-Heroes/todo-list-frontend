@@ -19,7 +19,7 @@ export function AuthVerification({ children }: AuthenticationUserProps) {
       navigate('/')
     }
 
-    if (!token) {
+    if (!token && !(pathname === '/sign-in' || pathname === '/sign-up')) {
       navigate('/sign-in')
     }
   }
