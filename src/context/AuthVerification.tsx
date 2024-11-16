@@ -1,3 +1,4 @@
+import { api } from "@/libs/axios";
 import { createContext, ReactNode, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 interface UserAuthContextProps {
@@ -16,11 +17,16 @@ export function AuthVerification({ children }: AuthenticationUserProps) {
 
   function handleVerifyAuthUser() {
     if ((pathname === '/sign-in' || pathname === '/sign-up') && token) {
+
       navigate('/')
     }
 
     if (!token && !(pathname === '/sign-in' || pathname === '/sign-up')) {
       navigate('/sign-in')
+    }
+
+    if (token) {
+      api.defaults.headers.common = { 'Authorization': `Bearer ${token}` }
     }
   }
 
