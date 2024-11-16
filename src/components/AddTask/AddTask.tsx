@@ -12,7 +12,7 @@ import { getIdUser } from "@/utils/getIdUser";
 import { toast } from "sonner";
 
 const RegisterTaskSchema = z.object({
-  title: z.string(),
+  name: z.string(),
   description: z.string(),
 })
 
@@ -22,7 +22,7 @@ export function AddTask() {
   const { handleSubmit, control, reset } = useForm<IRegisterTask>({
     resolver: zodResolver(RegisterTaskSchema),
     defaultValues: {
-      title: '',
+      name: '',
       description: ''
     }
   })
@@ -30,16 +30,16 @@ export function AddTask() {
   const { mutate } = useMutation({
     mutationFn: (data: IRegisterTask) =>
       registerTask({
-        name: data.title,
+        name: data.name,
         text: data.description,
         userId: getIdUser()
       }),
     onSuccess(data, variables, context) {
-      toast.success(`Sua task ${data.name} foi criada`)
+      toast.success(`Your task has been created`)
       reset()
     },
     onError(error, variables, context) {
-      toast.error(`Algo deu errado`)
+      toast.error(`Something went wrong. Please try again`)
     },
 
   })
@@ -47,7 +47,7 @@ export function AddTask() {
   function handleRegisterTask(data: IRegisterTask) {
     mutate({
       description: data.description,
-      title: data.title
+      name: data.name
     })
   }
   return (
@@ -59,21 +59,21 @@ export function AddTask() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Adiciona uma task</DialogTitle>
+          <DialogTitle>Add a task</DialogTitle>
           <DialogDescription>
-            Faça um cadastro de uma nova task
+            Create a new task
           </DialogDescription>
         </DialogHeader>
         <form className="mt-2 flex flex-col gap-2" onSubmit={handleSubmit(handleRegisterTask)}>
           <Controller
-            name="title"
+            name="name"
             control={control}
             render={({ field }) => {
               return (
                 <Input
-                  label="Title"
-                  id="title"
-                  placeholder="Digite o titulo"
+                  label="Name"
+                  id="name"
+                  placeholder="Enter the task name"
                   {...field}
                 />
               )
@@ -87,7 +87,7 @@ export function AddTask() {
                 <Input
                   label="Description"
                   id="description"
-                  placeholder="Digite o description"
+                  placeholder="Enter the task description"
                   {...field}
                 />
               )
