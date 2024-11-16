@@ -1,13 +1,20 @@
+import { AddTask } from "@/components/AddTask/AddTask";
 import Button from "@/components/Button/Button";
 import { Card } from "@/components/Card/Card";
 import { CardNewTask } from "@/components/Card/CardNewTask";
 import { ShowMenuButton } from "@/components/Menu/ShowMenuButton";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { TitleOfTypeOfProgress } from "@/components/Tasks/TitleOfTypeOfProgress";
+import { getAllTasks } from "@/infra/http/tasks/get-all";
 
 import { BetweenVerticalEnd, ChevronDown, Download } from "lucide-react";
+import { useQuery } from "react-query";
 
 export function Home() {
+  const { data: tasks, } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: () => getAllTasks({})
+  })
   return (
     <div className="bg-gray-100 w-full h-full overflow-y-hidden md:overflow-y-auto">
       <header className="flex justify-center items-center shadow-md gap-4 md:pl-0 md:gap-0">
@@ -37,9 +44,7 @@ export function Home() {
               </div>
               < ChevronDown className="text-xs text-slate-400" />
             </div>
-            <div>
-              <Button className="text-xs" label={'Add New Task +'} />
-            </div>
+            <AddTask />
           </div>
         </div>
 
@@ -49,14 +54,11 @@ export function Home() {
               title="IN PROGRESS"
             />
             <div className="flex flex-col gap-3 overflow-y-scroll h-[500px] scrollbar">
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
+              {
+                tasks?.map(task => <Card title={task.name} />)
+              }
+
+
               <CardNewTask />
             </div>
           </div>
@@ -66,7 +68,7 @@ export function Home() {
               title="COMPLETED"
             />
             <div className="flex flex-col gap-3 overflow-y-scroll h-[500px] scrollbar">
-              <Card />
+
               <CardNewTask />
             </div>
           </div>
@@ -76,8 +78,7 @@ export function Home() {
               title="BACKLOG"
             />
             <div className="flex flex-col gap-3 overflow-y-scroll h-[500px] scrollbar">
-              <Card />
-              <Card />
+
               <CardNewTask />
             </div>
           </div>
