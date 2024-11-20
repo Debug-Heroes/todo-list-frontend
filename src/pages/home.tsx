@@ -1,6 +1,7 @@
 import { AddTask } from "@/components/AddTask/AddTask";
 import { Card } from "@/components/Card/Card";
 import { CardNewTask } from "@/components/Card/CardNewTask";
+import { SpinnerCard } from "@/components/Card/CardSpinner";
 import { ShowMenuButton } from "@/components/Menu/ShowMenuButton";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { TitleOfTypeOfProgress } from "@/components/Tasks/TitleOfTypeOfProgress";
@@ -10,7 +11,7 @@ import { BetweenVerticalEnd, ChevronDown, Download } from "lucide-react";
 import { useQuery } from "react-query";
 
 export function Home() {
-  const { data: tasks, } = useQuery({
+  const { data: tasks, isFetching } = useQuery({
     queryKey: ["tasks"],
     queryFn: () => getAllTasks({})
   })
@@ -53,12 +54,19 @@ export function Home() {
               title="IN PROGRESS"
             />
             <div className="flex flex-col gap-3 overflow-y-scroll h-[500px] scrollbar">
+              {isFetching && (
+                <>
+                  <SpinnerCard />
+                  <SpinnerCard />
+                </>
+              )}
               {
                 tasks?.map(task => <Card key={task.id} title={task.name} />)
               }
+              {!isFetching && <CardNewTask />}
 
 
-              <CardNewTask />
+
             </div>
           </div>
           <div className="h-full">
@@ -67,8 +75,13 @@ export function Home() {
               title="COMPLETED"
             />
             <div className="flex flex-col gap-3 overflow-y-scroll h-[500px] scrollbar">
-
-              <CardNewTask />
+              {isFetching && (
+                <>
+                  <SpinnerCard />
+                  <SpinnerCard />
+                </>
+              )}
+              {!isFetching && <CardNewTask />}
             </div>
           </div>
           <div className="h-full">
@@ -77,8 +90,13 @@ export function Home() {
               title="BACKLOG"
             />
             <div className="flex flex-col gap-3 overflow-y-scroll h-[500px] scrollbar">
-
-              <CardNewTask />
+              {isFetching && (
+                <>
+                  <SpinnerCard />
+                  <SpinnerCard />
+                </>
+              )}
+              {!isFetching && <CardNewTask />}
             </div>
           </div>
         </div>
