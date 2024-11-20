@@ -1,5 +1,4 @@
 import { Paperclip } from "lucide-react"
-import { faker } from '@faker-js/faker';
 import { Avatar } from "../Avatar/Avatar";
 
 interface CardProps {
