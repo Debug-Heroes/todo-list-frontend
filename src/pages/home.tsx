@@ -1,11 +1,10 @@
 import { AddTask } from "@/components/AddTask/AddTask";
-import Button from "@/components/Button/Button";
 import { Card } from "@/components/Card/Card";
 import { CardNewTask } from "@/components/Card/CardNewTask";
 import { ShowMenuButton } from "@/components/Menu/ShowMenuButton";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { TitleOfTypeOfProgress } from "@/components/Tasks/TitleOfTypeOfProgress";
-import { getAllTasks } from "@/infra/http/tasks/get-all";
+import { getAllTasks } from "@/infra/http/tasks/get-all-tasks";
 
 import { BetweenVerticalEnd, ChevronDown, Download } from "lucide-react";
 import { useQuery } from "react-query";
@@ -55,7 +54,7 @@ export function Home() {
             />
             <div className="flex flex-col gap-3 overflow-y-scroll h-[500px] scrollbar">
               {
-                tasks?.map(task => <Card title={task.name} />)
+                tasks?.map(task => <Card key={task.id} title={task.name} />)
               }
 
 
