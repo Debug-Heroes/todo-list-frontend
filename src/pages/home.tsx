@@ -64,9 +64,6 @@ export function Home() {
                 tasks?.map(task => <Card key={task.id} title={task.name} />)
               }
               {!isFetching && <CardNewTask />}
-
-
-
             </div>
           </div>
           <div className="h-full">
