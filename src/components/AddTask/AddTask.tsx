@@ -8,8 +8,11 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "react-query";
 import { registerTask } from "@/infra/http/tasks/register-task";
-import { getIdUser } from "@/utils/getIdUser";
 import { toast } from "sonner";
+import { useGetIdUser } from "@/hook/useGetIdUser";
+import { queryClient } from "@/libs/react-query";
+import { IGetAllTasksResponse } from "@/infra/http/tasks/get-all-tasks";
+
 
 const RegisterTaskSchema = z.object({
   name: z.string(),
@@ -19,6 +22,8 @@ const RegisterTaskSchema = z.object({
 type IRegisterTask = z.infer<typeof RegisterTaskSchema>
 export function AddTask() {
   const [open, setOpen] = useState(false)
+  const { userId } = useGetIdUser()
+
   const { handleSubmit, control, reset } = useForm<IRegisterTask>({
     resolver: zodResolver(RegisterTaskSchema),
     defaultValues: {
@@ -32,13 +37,24 @@ export function AddTask() {
       registerTask({
         name: data.name,
         text: data.description,
-        userId: getIdUser()
+        userId,
       }),
-    onSuccess(data, variables, context) {
+    onSuccess(data, __, ___) {
       toast.success(`Your task has been created`)
+      const cached = queryClient.getQueryData<IGetAllTasksResponse[]>(["tasks"])
+
+      if (cached) {
+        queryClient.setQueriesData(["tasks"],
+          [...cached, {
+            ...data
+          }],
+
+        )
+      }
       reset()
+      setOpen(false)
     },
-    onError(error, variables, context) {
+    onError() {
       toast.error(`Something went wrong. Please try again`)
     },
 
@@ -51,7 +67,7 @@ export function AddTask() {
     })
   }
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={setOpen} >
       <DialogTrigger asChild>
         <div>
           <Button className="text-xs" label={'Add New Task +'} />

@@ -3,7 +3,7 @@ import { api } from "@/libs/axios"
 interface IGetAllTasksRequest {
 
 }
-interface IGetAllTasksResponse {
+export interface IGetAllTasksResponse {
   id: string
   name: string
   text: string
